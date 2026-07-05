@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZINA — Accessoires</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;1,9..144,500&family=Work+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#182b28;
+    --panel:#22403c;
+    --panel-2:#2c4c46;
+    --cream:#f4ede0;
+    --gold:#c9a24b;
+    --gold-soft:#e3c988;
+    --garnet:#8c3b3f;
+    --line: rgba(201,162,75,0.28);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--ink);
+    color:var(--cream);
+    font-family:'Work Sans', sans-serif;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3, .display{
+    font-family:'Fraunces', serif;
+    font-weight:500;
+    letter-spacing:-0.01em;
+  }
+  .mono{font-family:'IBM Plex Mono', monospace; letter-spacing:0.02em;}
+  a{color:inherit; text-decoration:none;}
+  img{max-width:100%; display:block;}
+
+  /* Zellige hairline pattern used as texture, not literal image */
+  .zellige-bg{
+    position:absolute; inset:0;
+    background-image:
+      linear-gradient(135deg, transparent 48.7%, var(--line) 49.2%, var(--line) 50.8%, transparent 51.3%),
+      linear-gradient(45deg, transparent 48.7%, var(--line) 49.2%, var(--line) 50.8%, transparent 51.3%);
+    background-size: 72px 72px;
+    opacity:0.5;
+    pointer-events:none;
+  }
+
+  /* NAV */
+  header{
+    position:sticky; top:0; z-index:50;
+    background:rgba(24,43,40,0.88);
+    backdrop-filter: blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-wrap{
+    max-width:1180px; margin:0 auto;
+    padding:16px 24px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{
+    font-family:'Fraunces', serif;
+    font-size:1.5rem;
+    font-weight:600;
+    letter-spacing:0.03em;
+    display:flex; align-items:center; gap:10px;
+  }
+  .brand .dot{width:8px;height:8px;border-radius:50%;background:var(--gold);}
+  nav.links{display:flex; gap:28px; font-size:0.92rem;}
+  nav.links a{opacity:0.85; transition:opacity .2s, color .2s; position:relative;}
+  nav.links a:hover{opacity:1; color:var(--gold-soft);}
+  .nav-cta{
+    background:var(--gold);
+    color:var(--ink);
+    padding:10px 18px;
+    border-radius:999px;
+    font-weight:600;
+    font-size:0.88rem;
+    white-space:nowrap;
+  }
+  .nav-cta:hover{background:var(--gold-soft);}
+  .burger{display:none; font-size:1.4rem; cursor:pointer; background:none; border:none; color:var(--cream);}
+
+  /* HERO */
+  .hero{
+    position:relative;
+    padding:96px 24px 84px;
+    max-width:1180px; margin:0 auto;
+    display:grid; grid-template-columns: 1.1fr 0.9fr; gap:48px;
+    align-items:center;
+  }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:10px;
+    color:var(--gold-soft); font-size:0.8rem; letter-spacing:0.14em; text-transform:uppercase;
+    margin-bottom:22px;
+  }
+  .eyebrow::before{content:''; width:24px; height:1px; background:var(--gold);}
+  .hero h1{
+    font-size:clamp(2.4rem, 5vw, 4rem);
+    line-height:1.08;
+    margin-bottom:22px;
+  }
+  .hero h1 em{font-style:italic; color:var(--gold-soft);}
+  .hero p.sub{
+    font-size:1.08rem; line-height:1.65; opacity:0.82; max-width:44ch; margin-bottom:34px;
+  }
+  .hero-actions{display:flex; gap:14px; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--gold); color:var(--ink); padding:15px 28px; border-radius:999px;
+    font-weight:600; font-size:0.95rem; display:inline-flex; align-items:center; gap:8px;
+    transition:transform .2s, background .2s;
+  }
+  .btn-primary:hover{background:var(--gold-soft); transform:translateY(-2px);}
+  .btn-ghost{
+    border:1px solid var(--line); padding:15px 28px; border-radius:999px;
+    font-weight:500; font-size:0.95rem; transition:border-color .2s, background .2s;
+  }
+  .btn-ghost:hover{border-color:var(--gold); background:rgba(201,162,75,0.08);}
+
+  /* Signature: display tray */
+  .tray{
+    position:relative; aspect-ratio:1/1;
+    border-radius:28px;
+    background:linear-gradient(155deg, var(--panel), var(--panel-2));
+    border:1px solid var(--line);
+    overflow:hidden;
+    display:grid; grid-template-columns:repeat(3,1fr); grid-template-rows:repeat(3,1fr);
+  }
+  .tray-cell{
+    display:flex; align-items:center; justify-content:center;
+    border:1px solid var(--line);
+    position:relative;
+  }
+  .tray-cell svg{width:34%; height:34%; opacity:0.9;}
+  .tray-cell.gold{background:radial-gradient(circle at 35% 30%, rgba(201,162,75,0.22), transparent 70%);}
+  .tray-cell.garnet{background:radial-gradient(circle at 60% 60%, rgba(140,59,63,0.28), transparent 70%);}
+  .tray-price{
+    position:absolute; bottom:16px; left:16px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:0.68rem; letter-spacing:0.05em; color:var(--gold-soft); opacity:0.8;
+  }
+
+  section{padding:88px 24px; position:relative;}
+  .section-inner{max-width:1180px; margin:0 auto; position:relative;}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:flex-end; gap:24px;
+    margin-bottom:48px; flex-wrap:wrap;
+  }
+  .section-head h2{font-size:clamp(1.8rem,3vw,2.6rem);}
+  .section-head .num{
+    font-family:'IBM Plex Mono'; color:var(--gold-soft); font-size:0.82rem; opacity:0.75;
+  }
+
+  /* Category filter */
+  .filters{display:flex; gap:10px; flex-wrap:wrap; margin-bottom:40px;}
+  .filter-btn{
+    padding:9px 18px; border-radius:999px; border:1px solid var(--line);
+    font-size:0.85rem; font-weight:500; cursor:pointer; background:transparent; color:var(--cream);
+    transition:all .2s;
+  }
+  .filter-btn.active, .filter-btn:hover{background:var(--gold); color:var(--ink); border-color:var(--gold);}
+
+  .grid{
+    display:grid; grid-template-columns:repeat(3, 1fr); gap:22px;
+  }
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:18px;
+    overflow:hidden;
+    transition:transform .25s, border-color .25s;
+  }
+  .card:hover{transform:translateY(-4px); border-color:var(--gold);}
+  .card-visual{
+    aspect-ratio:4/3.2;
+    position:relative;
+    overflow:hidden;
+    display:flex; align-items:center; justify-content:center;
+    background:linear-gradient(160deg, var(--panel-2), var(--ink));
+  }
+  .card-visual img{
+    width:100%; height:100%; object-fit:cover;
+    filter:saturate(0.55) sepia(0.25) hue-rotate(120deg) brightness(0.8) contrast(1.05);
+    transition:transform .4s ease, filter .3s ease;
+  }
+  .card:hover .card-visual img{transform:scale(1.06); filter:saturate(0.75) sepia(0.15) hue-rotate(120deg) brightness(0.9) contrast(1.05);}
+  .card-visual::after{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(24,43,40,0) 40%, rgba(24,43,40,0.75) 100%);
+    pointer-events:none;
+  }
+  .card-visual .ic-badge{
+    position:absolute; bottom:10px; right:10px; z-index:2;
+    width:32px; height:32px; border-radius:50%;
+    background:rgba(24,43,40,0.7); border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .card-visual .ic-badge svg{width:16px; height:16px; stroke:var(--gold-soft);}
+  .placeholder-tag{
+    position:absolute; top:12px; right:12px; z-index:2;
+    font-family:'IBM Plex Mono'; font-size:0.6rem; letter-spacing:0.04em;
+    background:rgba(140,59,63,0.75); color:var(--cream);
+    padding:3px 9px; border-radius:999px; text-transform:uppercase;
+  }
+  .card-badge{
+    position:absolute; top:12px; left:12px;
+    font-family:'IBM Plex Mono'; font-size:0.65rem; letter-spacing:0.05em;
+    background:rgba(24,43,40,0.75); border:1px solid var(--line);
+    padding:4px 10px; border-radius:999px; text-transform:uppercase; opacity:0.85;
+  }
+  .card-body{padding:18px 20px 20px;}
+  .card-body h3{font-size:1.08rem; font-weight:500; margin-bottom:4px;}
+  .card-cat{font-size:0.78rem; opacity:0.6; margin-bottom:12px;}
+  .card-row{display:flex; align-items:center; justify-content:space-between;}
+  .price{font-family:'IBM Plex Mono'; color:var(--gold-soft); font-size:0.95rem;}
+  .wa-btn{
+    display:inline-flex; align-items:center; gap:6px;
+    background:rgba(201,162,75,0.12); color:var(--gold-soft);
+    padding:8px 14px; border-radius:999px; font-size:0.78rem; font-weight:600;
+    border:1px solid var(--line); transition:background .2s, color .2s;
+  }
+  .wa-btn:hover{background:var(--gold); color:var(--ink);}
+
+  /* Story / about strip */
+  .strip{
+    background:var(--panel);
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:70px 24px;
+  }
+  .strip-inner{
+    max-width:900px; margin:0 auto; text-align:center;
+  }
+  .strip h2{font-size:clamp(1.6rem,3vw,2.3rem); line-height:1.35; margin-bottom:18px;}
+  .strip p{opacity:0.75; max-width:52ch; margin:0 auto; line-height:1.7;}
+
+  /* Contact */
+  .contact-grid{
+    display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:center;
+  }
+  .contact-card{
+    background:var(--panel); border:1px solid var(--line); border-radius:24px;
+    padding:44px; position:relative; overflow:hidden;
+  }
+  .contact-card h2{font-size:2rem; margin-bottom:14px;}
+  .contact-card p{opacity:0.78; margin-bottom:28px; line-height:1.6;}
+  .contact-methods{display:flex; flex-direction:column; gap:14px;}
+  .method{
+    display:flex; align-items:center; gap:14px; padding:14px 16px;
+    border:1px solid var(--line); border-radius:14px; transition:border-color .2s, background .2s;
+  }
+  .method:hover{border-color:var(--gold); background:rgba(201,162,75,0.06);}
+  .method .ic{width:38px; height:38px; border-radius:50%; background:rgba(201,162,75,0.15); display:flex; align-items:center; justify-content:center; flex-shrink:0;}
+  .method .ic svg{width:18px; height:18px; stroke:var(--gold-soft);}
+  .method .label{font-size:0.7rem; opacity:0.6; text-transform:uppercase; letter-spacing:0.06em;}
+  .method .value{font-weight:500;}
+
+  footer{
+    padding:36px 24px; text-align:center; opacity:0.55; font-size:0.82rem;
+    border-top:1px solid var(--line);
+  }
+
+  @media (max-width: 860px){
+    nav.links{display:none;}
+    .hero{grid-template-columns:1fr; padding-top:56px;}
+    .tray{order:-1; max-width:340px; margin:0 auto;}
+    .grid{grid-template-columns:repeat(2,1fr);}
+    .contact-grid{grid-template-columns:1fr;}
+  }
+  @media (max-width: 520px){
+    .grid{grid-template-columns:1fr;}
+    .nav-cta{padding:9px 14px; font-size:0.8rem;}
+  }
+  @media (prefers-reduced-motion: reduce){
+    html{scroll-behavior:auto;}
+    *{transition:none !important;}
+  }
+  :focus-visible{outline:2px solid var(--gold); outline-offset:2px;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="nav-wrap">
+    <div class="brand"><span class="dot"></span>ZINA</div>
+    <nav class="links">
+      <a href="#collection">Collection</a>
+      <a href="#histoire">Notre histoire</a>
+      <a href="#contact">Contact</a>
+    </nav>
+    <a class="nav-cta" href="#contact">Commander sur WhatsApp</a>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="zellige-bg" style="max-width:1180px;margin:0 auto;left:50%;transform:translateX(-50%);"></div>
+  <div style="position:relative;">
+    <div class="eyebrow">Boutique tunisienne · Fait avec goût</div>
+    <h1>La zina li tħebha,<br><em>fi click wa7ed.</em></h1>
+    <p class="sub">Bijoux, accessoires téléphone, sacs, montres... koll chay eli yzeyenlek el look mte3ek, mjam3in fi blasa wa7da. Ekhtar, ib3ath message, w el commande tewsollek.</p>
+    <div class="hero-actions">
+      <a href="#collection" class="btn-primary">Chouf el collection ↓</a>
+      <a href="#contact" class="btn-ghost">Ekteblna 3al WhatsApp</a>
+    </div>
+  </div>
+  <div class="tray">
+    <div class="tray-cell gold"><svg viewBox="0 0 24 24" fill="none" stroke="#e3c988" stroke-width="1.4"><circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.4"/></svg></div>
+    <div class="tray-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#e3c988" stroke-width="1.4"><rect x="7" y="2" width="10" height="20" rx="2"/><line x1="10" y1="18" x2="14" y2="18"/></svg></div>
+    <div class="tray-cell garnet"><svg viewBox="0 0 24 24" fill="none" stroke="#e3c988" stroke-width="1.4"><path d="M12 3l7 4v10l-7 4-7-4V7z"/></svg></div>
+    <div class="tray-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#e3c988" stroke-width="1.4"><path d="M4 8a4 4 0 018 0v10H4z"/><path d="M12 8a4 4 0 018 0v10h-8z"/></svg></div>
+    <div class="tray-cell garnet"><svg viewBox="0 0 24 24" fill="none" stroke="#e3c988" stroke-width="1.4"><circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/></svg></div>
+    <div class="tray-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#e3c988" stroke-width="1.4"><path d="M3 12h18M7 8v8M17 8v8"/></svg></div>
+    <div class="tray-cell gold"><svg viewBox="0 0 24 24" fill="none" stroke="#e3c988" stroke-width="1.4"><circle cx="9" cy="9" r="6"/><circle cx="15" cy="15" r="6"/></svg></div>
+    <div class="tray-cell"><svg viewBox="0 0 24 24" fill="none" stroke="#e3c988" stroke-width="1.4"><path d="M12 21s-7-4.35-9.5-8.5C.5 8.5 3 5 6.5 5c2 0 3.5 1.2 4.5 3 1-1.8 2.5-3 4.5-3 3.5 0 6 3.5 4 7.5C19 16.65 12 21 12 21z"/></svg></div>
+    <div class="tray-cell garnet"><svg viewBox="0 0 24 24" fill="none" stroke="#e3c988" stroke-width="1.4"><rect x="4" y="4" width="16" height="16" rx="8"/></svg></div>
+    <div class="tray-price">01—09 / EN VITRINE</div>
+  </div>
+</section>
+
+<section id="collection">
+  <div class="section-inner">
+    <div class="section-head">
+      <div>
+        <div class="eyebrow" style="margin-bottom:10px;">El collection</div>
+        <h2>Ekhtar el catégorie mte3ek</h2>
+      </div>
+      <div class="num">20 ARTICLES DISPONIBLES</div>
+    </div>
+
+    <div class="filters">
+      <button class="filter-btn active" data-filter="all">Kolchay</button>
+      <button class="filter-btn" data-filter="bijoux">Bijoux</button>
+      <button class="filter-btn" data-filter="tel">Téléphone</button>
+      <button class="filter-btn" data-filter="sacs">Sacs</button>
+      <button class="filter-btn" data-filter="montres">Montres</button>
+      <button class="filter-btn" data-filter="lunettes">Lunettes</button>
+      <button class="filter-btn" data-filter="ceintures">Ceintures</button>
+      <button class="filter-btn" data-filter="foulards">Foulards</button>
+      <button class="filter-btn" data-filter="porteclefs">Porte-clés</button>
+    </div>
+
+    <div class="grid" id="productGrid"></div>
+  </div>
+</section>
+
+<div class="strip" id="histoire">
+  <div class="strip-inner">
+    <div class="eyebrow" style="justify-content:center;">Notre histoire</div>
+    <h2>Bdinha b passion mte3na l zina, w kabret m3ana fi projet.</h2>
+    <p>ZINA houa projet Tounsi 100%, mawlod mel 7obb el détails eli y3amlou el look kamel. Kol article n5tarouh b yedna, w kol commande twassal b l'ihtimem eli testa7el.</p>
+  </div>
+</div>
+
+<section id="contact">
+  <div class="section-inner contact-grid">
+    <div>
+      <div class="eyebrow">Restons en contact</div>
+      <h2 style="font-size:clamp(1.8rem,3vw,2.6rem); margin-bottom:18px;">7abbeit chay? Ekteblna dghaya.</h2>
+      <p style="opacity:0.78; line-height:1.7; max-width:42ch;">Sift esm el article eli 3jbek, w a7na n3awnouk fel ba9i: paiement, livraison, w kol so2el 3andek.</p>
+    </div>
+    <div class="contact-card">
+      <div class="zellige-bg"></div>
+      <h2 style="position:relative;">Commander</h2>
+      <p style="position:relative;">Ekhtar el tari9a eli t7ebha, w a7na hnaya.</p>
+      <div class="contact-methods" style="position:relative;">
+        <a class="method" href="https://wa.me/21600000000" target="_blank" rel="noopener">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div>
+          <div><div class="label">WhatsApp</div><div class="value">+216 00 000 000</div></div>
+        </a>
+        <a class="method" href="tel:+21600000000">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0122 16.92z"/></svg></div>
+          <div><div class="label">Téléphone</div><div class="value">+216 00 000 000</div></div>
+        </a>
+        <a class="method" href="https://instagram.com" target="_blank" rel="noopener">
+          <div class="ic"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.6"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.5" fill="#e3c988"/></svg></div>
+          <div><div class="label">Instagram</div><div class="value">@zina.tn</div></div>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 ZINA — Accessoires. Fait b 7obb fi Tounes.
+</footer>
+
+<script>
+const ICONS = {
+  bijoux: '<circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.4"/>',
+  tel: '<rect x="7" y="2" width="10" height="20" rx="2"/><line x1="10" y1="18" x2="14" y2="18"/>',
+  sacs: '<path d="M4 8a4 4 0 018 0v10H4z"/><path d="M12 8a4 4 0 018 0v10h-8z"/>',
+  montres: '<circle cx="12" cy="12" r="8"/><path d="M12 8v4l3 2"/>',
+  lunettes: '<circle cx="9" cy="9" r="6"/><circle cx="15" cy="15" r="6"/>',
+  ceintures: '<path d="M3 12h18M7 8v8M17 8v8"/>',
+  foulards: '<path d="M4 6c4 0 4 4 8 4s4-4 8-4M4 12c4 0 4 4 8 4s4-4 8-4"/>',
+  porteclefs: '<circle cx="8" cy="8" r="4"/><path d="M11 11l9 9M16 16l3-3M18 18l3-3"/>'
+};
+const CAT_LABEL = {bijoux:'Bijoux', tel:'Téléphone', sacs:'Sacs', montres:'Montres', lunettes:'Lunettes', ceintures:'Ceintures', foulards:'Foulards', porteclefs:'Porte-clés'};
+
+const PRODUCTS = [
+  {name:'Collier Layla', cat:'bijoux', price:'45 DT', seed:'zina-bijoux-1'},
+  {name:'Bagues Nour (set)', cat:'bijoux', price:'32 DT', seed:'zina-bijoux-2'},
+  {name:'Boucles Amira', cat:'bijoux', price:'28 DT', seed:'zina-bijoux-3'},
+  {name:'Bracelet Warda', cat:'bijoux', price:'25 DT', seed:'zina-bijoux-4'},
+  {name:'Coque MagSafe', cat:'tel', price:'22 DT', seed:'zina-tel-1'},
+  {name:'Pop-socket doré', cat:'tel', price:'12 DT', seed:'zina-tel-2'},
+  {name:'Cordon téléphone perlé', cat:'tel', price:'18 DT', seed:'zina-tel-3'},
+  {name:'Sac Zellige mini', cat:'sacs', price:'85 DT', seed:'zina-sacs-1'},
+  {name:'Pochette soirée', cat:'sacs', price:'60 DT', seed:'zina-sacs-2'},
+  {name:'Sac cabas cuir', cat:'sacs', price:'95 DT', seed:'zina-sacs-3'},
+  {name:'Montre Sable', cat:'montres', price:'110 DT', seed:'zina-montres-1'},
+  {name:'Montre Cuir Noir', cat:'montres', price:'120 DT', seed:'zina-montres-2'},
+  {name:'Lunettes Soleil Ronde', cat:'lunettes', price:'40 DT', seed:'zina-lunettes-1'},
+  {name:'Lunettes Ecaille', cat:'lunettes', price:'38 DT', seed:'zina-lunettes-2'},
+  {name:'Ceinture Tressée', cat:'ceintures', price:'30 DT', seed:'zina-ceintures-1'},
+  {name:'Ceinture Boucle Or', cat:'ceintures', price:'34 DT', seed:'zina-ceintures-2'},
+  {name:'Foulard Soie Zellige', cat:'foulards', price:'35 DT', seed:'zina-foulards-1'},
+  {name:'Foulard Léger Uni', cat:'foulards', price:'26 DT', seed:'zina-foulards-2'},
+  {name:'Porte-clés Cuir Initiale', cat:'porteclefs', price:'15 DT', seed:'zina-porteclefs-1'},
+  {name:'Porte-clés Pompon', cat:'porteclefs', price:'10 DT', seed:'zina-porteclefs-2'},
+];
+
+const grid = document.getElementById('productGrid');
+
+function render(filter){
+  grid.innerHTML = '';
+  const list = filter === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.cat === filter);
+  list.forEach(p => {
+    const waText = encodeURIComponent(`Ahla, n7eb ne3raf 3la: ${p.name}`);
+    const card = document.createElement('div');
+    card.className = 'card';
+    card.innerHTML = `
+      <div class="card-visual">
+        <img src="https://picsum.photos/seed/${p.seed}/600/480" alt="${p.name}" loading="lazy">
+        <div class="card-badge">${CAT_LABEL[p.cat]}</div>
+        <div class="placeholder-tag">Demo</div>
+        <div class="ic-badge"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.4">${ICONS[p.cat]}</svg></div>
+      </div>
+      <div class="card-body">
+        <h3>${p.name}</h3>
+        <div class="card-cat">${CAT_LABEL[p.cat]}</div>
+        <div class="card-row">
+          <span class="price">${p.price}</span>
+          <a class="wa-btn" href="https://wa.me/21600000000?text=${waText}" target="_blank" rel="noopener">Eshriha →</a>
+        </div>
+      </div>
+    `;
+    grid.appendChild(card);
+  });
+}
+render('all');
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    render(btn.dataset.filter);
+  });
+});
+</script>
+
+</body>
+</html>
